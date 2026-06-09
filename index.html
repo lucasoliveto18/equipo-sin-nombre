@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Equipo sin nombre</title>
+
   <style>
     body {
       margin: 0;
@@ -51,7 +52,8 @@
       margin: 3px;
     }
 
-    button.active, button:hover {
+    button.active,
+    button:hover {
       background: #16c216;
       color: #001000;
     }
@@ -131,7 +133,8 @@
       border-bottom: 1px solid #235023;
     }
 
-    td:first-child, th:first-child {
+    td:first-child,
+    th:first-child {
       text-align: left;
     }
 
@@ -153,7 +156,16 @@
       font-weight: bold;
     }
 
-    .loading, .error {
+    .champion {
+      background: rgba(33, 232, 33, 0.18) !important;
+    }
+
+    .danger {
+      background: rgba(255, 60, 60, 0.18) !important;
+    }
+
+    .loading,
+    .error {
       padding: 25px;
       text-align: center;
       color: #b8ddb8;
@@ -171,8 +183,13 @@
     }
 
     @media (max-width: 750px) {
-      h1 { font-size: 22px; }
-      .cards { grid-template-columns: 1fr; }
+      h1 {
+        font-size: 22px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -181,6 +198,7 @@
   <header>
     <h1>Equipo sin nombre</h1>
     <div class="subtitle">Estadísticas oficiales del fulbito · estilo tablita clásica</div>
+
     <nav>
       <button class="active" onclick="showSection('apertura')">Apertura 2026</button>
       <button onclick="showSection('descensos')">Descensos</button>
@@ -193,10 +211,12 @@
         <small>Líder Apertura</small>
         <div id="liderApertura">-</div>
       </div>
+
       <div class="card">
         <small>Mejor Promedio</small>
         <div id="mejorPromedio">-</div>
       </div>
+
       <div class="card">
         <small>Última actualización</small>
         <div id="ultimaActualizacion">-</div>
@@ -226,20 +246,22 @@
       descensos: "DESCENSOS"
     };
 
-function showSection(id) {
-  document.querySelectorAll("section").forEach(section => {
-    section.classList.remove("active");
-  });
+    function showSection(id) {
+      document.querySelectorAll("section").forEach(section => {
+        section.classList.remove("active");
+      });
 
-  document.querySelectorAll("nav button").forEach(button => {
-    button.classList.remove("active");
-  });
+      document.querySelectorAll("nav button").forEach(button => {
+        button.classList.remove("active");
+      });
 
-  document.getElementById(id).classList.add("active");
+      document.getElementById(id).classList.add("active");
 
-  const button = document.querySelector(`button[onclick="showSection('${id}')"]`);
-  if (button) button.classList.add("active");
-}
+      const button = document.querySelector(`button[onclick="showSection('${id}')"]`);
+      if (button) {
+        button.classList.add("active");
+      }
+    }
 
     function googleSheetUrl(sheetName) {
       return `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
@@ -253,13 +275,17 @@ function showSection(id) {
       const end = text.lastIndexOf("}") + 1;
       const json = JSON.parse(text.substring(start, end));
 
-      const cols = json.table.cols.map((col, index) => col.label || `Col ${index + 1}`);
+      const cols = json.table.cols.map((col, index) => {
+        return col.label || `Col ${index + 1}`;
+      });
 
       const rows = json.table.rows.map(row => {
         const obj = {};
+
         row.c.forEach((cell, index) => {
           obj[cols[index]] = cell ? (cell.f || cell.v || "") : "";
         });
+
         return obj;
       }).filter(row => {
         return Object.values(row).some(value => String(value).trim() !== "");
@@ -268,83 +294,100 @@ function showSection(id) {
       return { cols, rows };
     }
 
+    function getColumnName(cols, possibleNames) {
+      return cols.find(col => {
+        const cleanCol = String(col).trim().toUpperCase();
+
+        return possibleNames.some(name => {
+          return cleanCol === String(name).trim().toUpperCase();
+        });
+      });
+    }
+
     function renderTable(containerId, data, type) {
-const container = document.getElementById(containerId);
+      const container = document.getElementById(containerId);
 
-if (!data.rows.length) {
-container.innerHTML = `<div class="error">No se encontraron datos.</div>`;
-return;
-}
+      if (!data.rows.length) {
+        container.innerHTML = `<div class="error">No se encontraron datos.</div>`;
+        return;
+      }
 
-let visibleCols = [];
+      let visibleCols = [];
 
-if (type === "apertura") {
-visibleCols = ["Player", "PTS", "PJ", "PG", "PE", "PP"];
-}
+      if (type === "apertura") {
+        visibleCols = [
+          getColumnName(data.cols, ["Player", "PLAYER", "Jugador", "JUGADOR"]),
+          getColumnName(data.cols, ["PTS"]),
+          getColumnName(data.cols, ["PJ"]),
+          getColumnName(data.cols, ["PG"]),
+          getColumnName(data.cols, ["PE"]),
+          getColumnName(data.cols, ["PP"])
+        ];
+      }
 
-if (type === "descensos") {
-visibleCols = ["Player", "PTS Totales", "PJ TOTAL", "PROMEDIO"];
-}
+      if (type === "descensos") {
+        visibleCols = [
+          getColumnName(data.cols, ["Player", "PLAYER", "Jugador", "JUGADOR"]),
+          getColumnName(data.cols, ["PTS Totales", "PTS TOTALES"]),
+          getColumnName(data.cols, ["PJ TOTAL", "PJ Totales"]),
+          getColumnName(data.cols, ["PROMEDIO", "Promedio"])
+        ];
+      }
 
-visibleCols = visibleCols.filter(col => data.cols.includes(col));
+      visibleCols = visibleCols.filter(Boolean);
 
-let html = `<div class="table-wrap"><table><thead><tr>`;
-html += `<th>#</th>`;
+      if (!visibleCols.length) {
+        container.innerHTML = `<div class="error">No se pudieron detectar columnas válidas.</div>`;
+        return;
+      }
 
-visibleCols.forEach(col => {
-html += `<th>${col}</th>`;
-});
+      let html = `<div class="table-wrap"><table><thead><tr>`;
+      html += `<th>#</th>`;
 
-html += `</tr></thead><tbody>`;
+      visibleCols.forEach(col => {
+        html += `<th>${col}</th>`;
+      });
 
-data.rows.forEach((row, index) => {
-let rowClass = "";
+      html += `</tr></thead><tbody>`;
 
-```
-if (type === "apertura" && index === 0) {
-  rowClass = "champion";
-}
+      data.rows.forEach((row, index) => {
+        let rowClass = "";
 
-if (type === "descensos" && index >= data.rows.length - 3) {
-  rowClass = "danger";
-}
+        if (type === "apertura" && index === 0) {
+          rowClass = "champion";
+        }
 
-html += `<tr class="${rowClass}">`;
-html += `<td class="pos">${index + 1}</td>`;
+        if (type === "descensos" && index >= data.rows.length - 3) {
+          rowClass = "danger";
+        }
 
-visibleCols.forEach((col, colIndex) => {
-  const value = row[col] ?? "";
-  const className = colIndex === 0 ? "player" : "";
-  html += `<td class="${className}">${value}</td>`;
-});
+        html += `<tr class="${rowClass}">`;
+        html += `<td class="pos">${index + 1}</td>`;
 
-html += `</tr>`;
-  const value = row[col] ?? "";
-  const className = colIndex === 0 ? "player" : "";
+        visibleCols.forEach((col, colIndex) => {
+          const value = row[col] ?? "";
+          const className = colIndex === 0 ? "player" : "";
+          html += `<td class="${className}">${value}</td>`;
+        });
 
-  html += `<td class="${className}">${value}</td>`;
-});
+        html += `</tr>`;
+      });
 
-html += `</tr>`;
-
-});
-
-html += `</tbody></table></div>`;
-container.innerHTML = html;
-}
-
+      html += `</tbody></table></div>`;
+      container.innerHTML = html;
+    }
 
     function updateCards(apertura, descensos) {
       if (apertura.rows.length) {
-        const first = apertura.rows[0];
-        const playerCol = apertura.cols[0];
-        document.getElementById("liderApertura").textContent = first[playerCol] || "-";
+        const playerCol = getColumnName(apertura.cols, ["Player", "PLAYER", "Jugador", "JUGADOR"]);
+        document.getElementById("liderApertura").textContent =
+          playerCol ? apertura.rows[0][playerCol] : "-";
       }
 
       if (descensos.rows.length) {
-        const first = descensos.rows[0];
-        const playerCol = descensos.cols[0];
-        document.getElementById("mejorPromedio").textContent = first[playerCol] || "-";
+        const playerCol = getColumnName(descensos.cols, ["Player", "PLAYER", "Jugador", "JUGADOR"]);
+        document.getElementById("mejorPromedio").textContent =
+          playerCol ? descensos.rows[0][playerCol] : "-";
       }
 
       const today = new Date();
@@ -354,13 +397,12 @@ container.innerHTML = html;
 
     async function init() {
       try {
-        const apertura = await fetchSheet(SHEETS.apertura);console.log(apertura.cols);
-        const descensos = await fetchSheet(SHEETS.descensos);console.log(descensos.cols);
+        const apertura = await fetchSheet(SHEETS.apertura);
+        const descensos = await fetchSheet(SHEETS.descensos);
 
         renderTable("aperturaContent", apertura, "apertura");
         renderTable("descensosContent", descensos, "descensos");
         updateCards(apertura, descensos);
-
       } catch (error) {
         console.error(error);
 
