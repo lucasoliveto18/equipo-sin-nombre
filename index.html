@@ -247,6 +247,8 @@ async function init(){
     console.log(apertura.rows[0]);
 
     renderTable("aperturaContent", apertura, "apertura");
+    renderTable("descensosContent", descensos, "descensos");
+updateCards(apertura, descensos);
   }catch(error){
     console.error(error);
     document.getElementById("aperturaContent").innerHTML = '<div class="error">No se pudo cargar Apertura 2026.</div>';
