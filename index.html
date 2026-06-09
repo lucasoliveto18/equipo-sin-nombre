@@ -1,357 +1,204 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Equipo sin nombre</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipo sin nombre</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #061206;
-      color: #eaffea;
-    }
-
-    header {
-      text-align: center;
-      padding: 25px 10px;
-      border-bottom: 3px solid #16c216;
-      background: #071807;
-    }
-
-    h1 {
-      display: inline-block;
-      color: #21e821;
-      border: 2px solid #21e821;
-      padding: 10px 18px;
-      margin: 0;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      font-size: 32px;
-    }
-
-    .subtitle {
-      margin-top: 12px;
-      color: #b8ddb8;
-      font-size: 13px;
-      text-transform: uppercase;
-    }
-
-    nav {
-      margin-top: 18px;
-    }
-
-    button {
-      background: #0b1f0b;
-      color: #eaffea;
-      border: 1px solid #16c216;
-      padding: 10px 14px;
-      cursor: pointer;
-      font-weight: bold;
-      margin: 3px;
-    }
-
-    button.active,
-    button:hover {
-      background: #16c216;
-      color: #001000;
-    }
-
-    main {
-      max-width: 1100px;
-      margin: 25px auto;
-      padding: 0 12px;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .card {
-      border: 1px solid #235023;
-      background: #0b1b0b;
-      padding: 15px;
-    }
-
-    .card small {
-      color: #b8ddb8;
-      text-transform: uppercase;
-    }
-
-    .card div {
-      color: #21e821;
-      font-size: 22px;
-      font-weight: bold;
-      margin-top: 8px;
-    }
-
-    section {
-      display: none;
-      border: 1px solid #235023;
-      margin-bottom: 20px;
-    }
-
-    section.active {
-      display: block;
-    }
-
-    .title {
-      background: #119b11;
-      color: #001000;
-      font-size: 20px;
-      font-weight: bold;
-      padding: 12px;
-      text-transform: uppercase;
-    }
-
-    .table-wrap {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 650px;
-    }
-
-    th {
-      background: #092409;
-      color: #21e821;
-      text-transform: uppercase;
-      font-size: 12px;
-      padding: 9px;
-      border-bottom: 1px solid #235023;
-    }
-
-    td {
-      padding: 9px;
-      text-align: center;
-      border-bottom: 1px solid #235023;
-    }
-
-    td:first-child,
-    th:first-child {
-      text-align: left;
-    }
-
-    tr:nth-child(even) {
-      background: rgba(33, 232, 33, 0.08);
-    }
-
-    tr:hover {
-      background: rgba(33, 232, 33, 0.15);
-    }
-
-    .pos {
-      color: #21e821;
-      font-weight: bold;
-      width: 40px;
-    }
-
-    .player {
-      font-weight: bold;
-    }
-
-    .champion {
-      background: rgba(33, 232, 33, 0.18) !important;
-    }
-
-    .danger {
-      background: rgba(255, 60, 60, 0.18) !important;
-    }
-
-    .loading,
-    .error {
-      padding: 25px;
-      text-align: center;
-      color: #b8ddb8;
-    }
-
-    .error {
-      color: #ff6b6b;
-    }
-
-    footer {
-      text-align: center;
-      color: #b8ddb8;
-      padding: 30px;
-      font-size: 12px;
-    }
-
-    @media (max-width: 750px) {
-      h1 {
-        font-size: 22px;
-      }
-
-      .cards {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#061206;color:#eaffea}
+header{text-align:center;padding:25px 10px;border-bottom:3px solid #16c216;background:#071807}
+h1{display:inline-block;color:#21e821;border:2px solid #21e821;padding:10px 18px;margin:0;text-transform:uppercase;letter-spacing:2px;font-size:32px}
+.subtitle{margin-top:12px;color:#b8ddb8;font-size:13px;text-transform:uppercase}
+nav{margin-top:18px}
+button{background:#0b1f0b;color:#eaffea;border:1px solid #16c216;padding:10px 14px;cursor:pointer;font-weight:bold;margin:3px}
+button.active,button:hover{background:#16c216;color:#001000}
+main{max-width:1100px;margin:25px auto;padding:0 12px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.card{border:1px solid #235023;background:#0b1b0b;padding:15px}
+.card small{color:#b8ddb8;text-transform:uppercase}
+.card div{color:#21e821;font-size:22px;font-weight:bold;margin-top:8px}
+section{display:none;border:1px solid #235023;margin-bottom:20px}
+section.active{display:block}
+.title{background:#119b11;color:#001000;font-size:20px;font-weight:bold;padding:12px;text-transform:uppercase}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:650px}
+th{background:#092409;color:#21e821;text-transform:uppercase;font-size:12px;padding:9px;border-bottom:1px solid #235023}
+td{padding:9px;text-align:center;border-bottom:1px solid #235023}
+td:first-child,th:first-child{text-align:left}
+tr:nth-child(even){background:rgba(33,232,33,.08)}
+tr:hover{background:rgba(33,232,33,.15)}
+.pos{color:#21e821;font-weight:bold;width:40px}
+.player{font-weight:bold}
+.champion{background:rgba(33,232,33,.18)!important}
+.danger{background:rgba(255,60,60,.18)!important}
+.loading,.error{padding:25px;text-align:center;color:#b8ddb8}
+.error{color:#ff6b6b}
+footer{text-align:center;color:#b8ddb8;padding:30px;font-size:12px}
+@media(max-width:750px){h1{font-size:22px}.cards{grid-template-columns:1fr}}
+</style>
 </head>
 
 <body>
-  <header>
-    <h1>Equipo sin nombre</h1>
-    <div class="subtitle">Estadísticas oficiales del fulbito · estilo tablita clásica</div>
+<header>
+<h1>Equipo sin nombre</h1>
+<div class="subtitle">Estadísticas oficiales del fulbito · estilo tablita clásica</div>
+<nav>
+<button class="active" id="btnApertura">Apertura 2026</button>
+<button id="btnDescensos">Descensos</button>
+</nav>
+</header>
 
-    <nav>
-      <button class="active" onclick="showSection('apertura')">Apertura 2026</button>
-      <button onclick="showSection('descensos')">Descensos</button>
-    </nav>
-  </header>
+<main>
+<div class="cards">
+<div class="card"><small>Líder Apertura</small><div id="liderApertura">-</div></div>
+<div class="card"><small>Mejor Promedio</small><div id="mejorPromedio">-</div></div>
+<div class="card"><small>Última actualización</small><div id="ultimaActualizacion">-</div></div>
+</div>
 
-  <main>
-    <div class="cards">
-      <div class="card">
-        <small>Líder Apertura</small>
-        <div id="liderApertura">-</div>
-      </div>
+<section id="apertura" class="active">
+<div class="title">Tabla Apertura 2026</div>
+<div id="aperturaContent" class="loading">Cargando tabla...</div>
+</section>
 
-      <div class="card">
-        <small>Mejor Promedio</small>
-        <div id="mejorPromedio">-</div>
-      </div>
+<section id="descensos">
+<div class="title">Promedios / Descensos</div>
+<div id="descensosContent" class="loading">Cargando promedios...</div>
+</section>
+</main>
 
-      <div class="card">
-        <small>Última actualización</small>
-        <div id="ultimaActualizacion">-</div>
-      </div>
-    </div>
+<footer>Hecho para la gloria barrial · Equipo sin nombre FC</footer>
 
-    <section id="apertura" class="active">
-      <div class="title">Tabla Apertura 2026</div>
-      <div id="aperturaContent" class="loading">Cargando tabla...</div>
-    </section>
+<script>
+const SHEET_ID = "192LJYUIj-fhgDpciGXRbT7sygegMMhtFKyenQ06etls";
 
-    <section id="descensos">
-      <div class="title">Promedios / Descensos</div>
-      <div id="descensosContent" class="loading">Cargando promedios...</div>
-    </section>
-  </main>
+document.getElementById("btnApertura").addEventListener("click", function(){
+  showSection("apertura", "btnApertura");
+});
 
-  <footer>
-    Hecho para la gloria barrial · Equipo sin nombre FC
-  </footer>
+document.getElementById("btnDescensos").addEventListener("click", function(){
+  showSection("descensos", "btnDescensos");
+});
 
-  <script>
-    const SHEET_ID = "192LJYUIj-fhgDpciGXRbT7sygegMMhtFKyenQ06etls";
+function showSection(sectionId, buttonId){
+  document.getElementById("apertura").classList.remove("active");
+  document.getElementById("descensos").classList.remove("active");
+  document.getElementById("btnApertura").classList.remove("active");
+  document.getElementById("btnDescensos").classList.remove("active");
 
-    const SHEETS = {
-      apertura: "Apertura 2026",
-      descensos: "DESCENSOS"
-    };
+  document.getElementById(sectionId).classList.add("active");
+  document.getElementById(buttonId).classList.add("active");
+}
 
-    function showSection(id) {
-      document.querySelectorAll("section").forEach(section => {
-        section.classList.remove("active");
-      });
+function sheetUrl(sheetName){
+  return "https://docs.google.com/spreadsheets/d/" + SHEET_ID + "/gviz/tq?tqx=out:json&sheet=" + encodeURIComponent(sheetName);
+}
 
-      document.querySelectorAll("nav button").forEach(button => {
-        button.classList.remove("active");
-      });
+async function fetchSheet(sheetName){
+  const response = await fetch(sheetUrl(sheetName));
+  const text = await response.text();
 
-      document.getElementById(id).classList.add("active");
+  const jsonText = text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1);
+  const json = JSON.parse(jsonText);
 
-      const button = document.querySelector(`button[onclick="showSection('${id}')"]`);
-      if (button) {
-        button.classList.add("active");
-      }
-    }
+  const cols = json.table.cols.map(function(col, index){
+    return col.label || "COL " + (index + 1);
+  });
 
-    function googleSheetUrl(sheetName) {
-      return `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
-    }
+  const rows = json.table.rows.map(function(row){
+    const obj = {};
 
-    async function fetchSheet(sheetName) {
-      const response = await fetch(googleSheetUrl(sheetName));
-      const text = await response.text();
+    row.c.forEach(function(cell, index){
+      obj[cols[index]] = cell ? (cell.f || cell.v || "") : "";
+    });
 
-      const start = text.indexOf("{");
-      const end = text.lastIndexOf("}") + 1;
-      const json = JSON.parse(text.substring(start, end));
+    return obj;
+  });
 
-      const cols = json.table.cols.map((col, index) => {
-        return col.label || `Col ${index + 1}`;
-      });
+  return { cols: cols, rows: rows };
+}
 
-      const rows = json.table.rows.map(row => {
-        const obj = {};
+function findCol(cols, names){
+  return cols.find(function(col){
+    return names.some(function(name){
+      return String(col).trim().toUpperCase() === String(name).trim().toUpperCase();
+    });
+  });
+}
 
-        row.c.forEach((cell, index) => {
-          obj[cols[index]] = cell ? (cell.f || cell.v || "") : "";
-        });
+function cleanPlayerRows(rows, playerCol){
+  return rows.filter(function(row){
+    const player = row[playerCol];
+    if (!player) return false;
+    if (!isNaN(Number(player))) return false;
+    return String(player).trim().toUpperCase() !== "PLAYER";
+  });
+}
 
-        return obj;
-      }).filter(row => {
-        return Object.values(row).some(value => String(value).trim() !== "");
-      });
-
-      return { cols, rows };
-    }
-
-    function getColumnName(cols, possibleNames) {
-      return cols.find(col => {
-        const cleanCol = String(col).trim().toUpperCase();
-
-        return possibleNames.some(name => {
-          return cleanCol === String(name).trim().toUpperCase();
-        });
-      });
-    }
-
-    function renderTable(containerId, data, type) {
+function renderTable(containerId, data, type){
   const container = document.getElementById(containerId);
 
   let visibleCols = [];
 
-  if (type === "apertura") {
-    visibleCols = ["PLAYER", "PTS", "PJ", "PG", "PE", "PP"];
+  if (type === "apertura"){
+    visibleCols = [
+      findCol(data.cols, ["PLAYER", "Player", "Jugador", "JUGADOR"]),
+      findCol(data.cols, ["PTS"]),
+      findCol(data.cols, ["PJ"]),
+      findCol(data.cols, ["PG"]),
+      findCol(data.cols, ["PE"]),
+      findCol(data.cols, ["PP"])
+    ];
   }
 
-  if (type === "descensos") {
-    visibleCols = ["PLAYER", "PTS Totales", "PJ TOTAL", "PROMEDIO"];
+  if (type === "descensos"){
+    visibleCols = [
+      findCol(data.cols, ["PLAYER", "Player", "Jugador", "JUGADOR"]),
+      findCol(data.cols, ["PTS Totales", "PTS TOTALES"]),
+      findCol(data.cols, ["PJ TOTAL", "PJ Totales"]),
+      findCol(data.cols, ["PROMEDIO", "Promedio"])
+    ];
   }
 
-  visibleCols = visibleCols.filter(function(col) {
-    return data.cols.includes(col);
-  });
+  visibleCols = visibleCols.filter(Boolean);
+
+  if (!visibleCols.length){
+    container.innerHTML = '<div class="error">No se detectaron columnas válidas.</div>';
+    return;
+  }
 
   const playerCol = visibleCols[0];
+  const cleanRows = cleanPlayerRows(data.rows, playerCol);
 
-  const cleanRows = data.rows.filter(function(row) {
-    const player = row[playerCol];
-    return player && isNaN(Number(player));
-  });
+  if (!cleanRows.length){
+    container.innerHTML = '<div class="error">No se encontraron jugadores.</div>';
+    return;
+  }
 
   let html = '<div class="table-wrap"><table><thead><tr>';
   html += '<th>#</th>';
 
-  visibleCols.forEach(function(col) {
+  visibleCols.forEach(function(col){
     html += '<th>' + col + '</th>';
   });
 
   html += '</tr></thead><tbody>';
 
-  cleanRows.forEach(function(row, index) {
+  cleanRows.forEach(function(row, index){
     let rowClass = "";
 
-    if (type === "apertura" && index === 0) {
+    if (type === "apertura" && index === 0){
       rowClass = "champion";
     }
 
-    if (type === "descensos" && index >= cleanRows.length - 3) {
+    if (type === "descensos" && index >= cleanRows.length - 3){
       rowClass = "danger";
     }
 
     html += '<tr class="' + rowClass + '">';
     html += '<td class="pos">' + (index + 1) + '</td>';
 
-    visibleCols.forEach(function(col, colIndex) {
+    visibleCols.forEach(function(col, colIndex){
       const value = row[col] || "";
       const className = colIndex === 0 ? "player" : "";
       html += '<td class="' + className + '">' + value + '</td>';
@@ -364,44 +211,34 @@
   container.innerHTML = html;
 }
 
-    function updateCards(apertura, descensos) {
-      if (apertura.rows.length) {
-        const playerCol = getColumnName(apertura.cols, ["Player", "PLAYER", "Jugador", "JUGADOR"]);
-        document.getElementById("liderApertura").textContent =
-          playerCol ? apertura.rows[0][playerCol] : "-";
-      }
+function updateCards(apertura, descensos){
+  const aperturaPlayerCol = findCol(apertura.cols, ["PLAYER", "Player", "Jugador", "JUGADOR"]);
+  const descensosPlayerCol = findCol(descensos.cols, ["PLAYER", "Player", "Jugador", "JUGADOR"]);
 
-      if (descensos.rows.length) {
-        const playerCol = getColumnName(descensos.cols, ["Player", "PLAYER", "Jugador", "JUGADOR"]);
-        document.getElementById("mejorPromedio").textContent =
-          playerCol ? descensos.rows[0][playerCol] : "-";
-      }
+  const aperturaRows = cleanPlayerRows(apertura.rows, aperturaPlayerCol);
+  const descensosRows = cleanPlayerRows(descensos.rows, descensosPlayerCol);
 
-      const today = new Date();
-      document.getElementById("ultimaActualizacion").textContent =
-        today.toLocaleDateString("es-AR");
-    }
+  document.getElementById("liderApertura").textContent = aperturaRows[0] ? aperturaRows[0][aperturaPlayerCol] : "-";
+  document.getElementById("mejorPromedio").textContent = descensosRows[0] ? descensosRows[0][descensosPlayerCol] : "-";
+  document.getElementById("ultimaActualizacion").textContent = new Date().toLocaleDateString("es-AR");
+}
 
-    async function init() {
-      try {
-        const apertura = await fetchSheet(SHEETS.apertura);
-        const descensos = await fetchSheet(SHEETS.descensos);
+async function init(){
+  try{
+    const apertura = await fetchSheet("Apertura 2026");
+    const descensos = await fetchSheet("DESCENSOS");
 
-        renderTable("aperturaContent", apertura, "apertura");
-        renderTable("descensosContent", descensos, "descensos");
-        updateCards(apertura, descensos);
-      } catch (error) {
-        console.error(error);
+    renderTable("aperturaContent", apertura, "apertura");
+    renderTable("descensosContent", descensos, "descensos");
+    updateCards(apertura, descensos);
+  }catch(error){
+    console.error(error);
+    document.getElementById("aperturaContent").innerHTML = '<div class="error">No se pudo cargar Apertura 2026.</div>';
+    document.getElementById("descensosContent").innerHTML = '<div class="error">No se pudo cargar DESCENSOS.</div>';
+  }
+}
 
-        document.getElementById("aperturaContent").innerHTML =
-          `<div class="error">No se pudo cargar Apertura 2026. Revisá que el Google Sheets esté público.</div>`;
-
-        document.getElementById("descensosContent").innerHTML =
-          `<div class="error">No se pudo cargar DESCENSOS. Revisá que el Google Sheets esté público.</div>`;
-      }
-    }
-
-    init();
-  </script>
+init();
+</script>
 </body>
 </html>
