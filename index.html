@@ -125,7 +125,20 @@ function findCol(cols, names){
     });
   });
 }
+function findPlayerCol(data){
+  return data.cols.find(function(col){
+    return data.rows.some(function(row){
+      const value = String(row[col] || "").trim().toUpperCase();
 
+      return value === "MARI PIERINI"
+          || value === "DOCTOR SAYA"
+          || value === "GONZA NÚÑEZ"
+          || value === "GONZA";
+    });
+  });
+}
+
+function cleanPlayerRows(rows, playerCol){
 function cleanPlayerRows(rows, playerCol){
   return rows.filter(function(row){
     const player = row[playerCol];
@@ -142,7 +155,7 @@ function renderTable(containerId, data, type){
 
   if (type === "apertura"){
     visibleCols = [
-      data.cols[1],
+      findPlayerCol(data),
       findCol(data.cols, ["PTS"]),
       findCol(data.cols, ["PJ"]),
       findCol(data.cols, ["PG"]),
@@ -153,7 +166,7 @@ function renderTable(containerId, data, type){
 
   if (type === "descensos"){
     visibleCols = [
-      data.cols[1],
+      findPlayerCol(data),
       findCol(data.cols, ["PTS Totales", "PTS TOTALES"]),
       findCol(data.cols, ["PJ TOTAL", "PJ Totales"]),
       findCol(data.cols, ["PROMEDIO", "Promedio"])
