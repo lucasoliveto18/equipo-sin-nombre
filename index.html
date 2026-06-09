@@ -1,267 +1,217 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Equipo sin nombre</title>
   <style>
-    :root {
-      --bg: #071107;
-      --panel: #102010;
-      --panel-2: #0b190b;
-      --green: #24d224;
-      --green-dark: #149414;
-      --text: #e6ffe6;
-      --muted: #a7c7a7;
-      --line: #245024;
-      --danger: #ff5b5b;
-      --warning: #ffd75b;
-    }
-
-    * { box-sizing: border-box; }
-
     body {
       margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: radial-gradient(circle at top, #102810 0, var(--bg) 48%);
-      color: var(--text);
+      font-family: Arial, sans-serif;
+      background: #061206;
+      color: #eaffea;
     }
 
     header {
-      border-bottom: 3px solid var(--green);
-      background: linear-gradient(180deg, #0f240f, #071107);
-      padding: 18px 14px 14px;
       text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 10;
+      padding: 25px 10px;
+      border-bottom: 3px solid #16c216;
+      background: #071807;
     }
 
-    .brand {
+    h1 {
       display: inline-block;
-      border: 2px solid var(--green);
-      padding: 8px 14px;
-      font-size: 30px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      color: var(--green);
+      color: #21e821;
+      border: 2px solid #21e821;
+      padding: 10px 18px;
+      margin: 0;
       text-transform: uppercase;
-      text-shadow: 0 0 8px rgba(36, 210, 36, .5);
-      background: #061006;
+      letter-spacing: 2px;
+      font-size: 32px;
     }
 
     .subtitle {
-      margin-top: 8px;
-      color: var(--muted);
+      margin-top: 12px;
+      color: #b8ddb8;
       font-size: 13px;
       text-transform: uppercase;
-      letter-spacing: .8px;
     }
 
     nav {
-      margin-top: 14px;
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
+      margin-top: 18px;
     }
 
-    nav button {
+    button {
+      background: #0b1f0b;
+      color: #eaffea;
+      border: 1px solid #16c216;
+      padding: 10px 14px;
       cursor: pointer;
-      border: 1px solid var(--green-dark);
-      background: #081608;
-      color: var(--text);
-      padding: 9px 12px;
-      font-weight: 700;
-      border-radius: 3px;
+      font-weight: bold;
+      margin: 3px;
     }
 
-    nav button.active,
-    nav button:hover {
-      background: var(--green-dark);
-      color: #031003;
+    button.active, button:hover {
+      background: #16c216;
+      color: #001000;
     }
 
     main {
-      max-width: 1080px;
-      margin: 22px auto 40px;
+      max-width: 1100px;
+      margin: 25px auto;
       padding: 0 12px;
     }
 
-    .scoreboard {
+    .cards {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
-    .stat-card {
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, var(--panel), var(--panel-2));
-      padding: 14px;
-      min-height: 86px;
+    .card {
+      border: 1px solid #235023;
+      background: #0b1b0b;
+      padding: 15px;
     }
 
-    .stat-card .label {
-      color: var(--muted);
-      font-size: 12px;
+    .card small {
+      color: #b8ddb8;
       text-transform: uppercase;
-      margin-bottom: 7px;
     }
 
-    .stat-card .value {
-      font-size: 24px;
-      color: var(--green);
-      font-weight: 900;
+    .card div {
+      color: #21e821;
+      font-size: 22px;
+      font-weight: bold;
+      margin-top: 8px;
     }
 
     section {
       display: none;
-      border: 1px solid var(--line);
-      background: rgba(7, 17, 7, .9);
-      box-shadow: 0 0 18px rgba(0,0,0,.25);
+      border: 1px solid #235023;
+      margin-bottom: 20px;
     }
 
-    section.active { display: block; }
+    section.active {
+      display: block;
+    }
 
-    .section-title {
-      background: var(--green-dark);
-      color: #031003;
-      padding: 10px 12px;
-      font-size: 18px;
-      font-weight: 900;
+    .title {
+      background: #119b11;
+      color: #001000;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 12px;
       text-transform: uppercase;
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      align-items: center;
     }
 
-    .section-title small {
-      font-size: 11px;
-      font-weight: 700;
-      opacity: .8;
+    .table-wrap {
+      overflow-x: auto;
     }
-
-    .table-wrap { overflow-x: auto; }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 640px;
-    }
-
-    th, td {
-      border-bottom: 1px solid var(--line);
-      padding: 9px 8px;
-      text-align: center;
-      white-space: nowrap;
+      min-width: 650px;
     }
 
     th {
-      background: #0c240c;
-      color: var(--green);
-      font-size: 12px;
+      background: #092409;
+      color: #21e821;
       text-transform: uppercase;
-      position: sticky;
-      top: 96px;
-      z-index: 2;
+      font-size: 12px;
+      padding: 9px;
+      border-bottom: 1px solid #235023;
     }
 
-    td:first-child, th:first-child { text-align: left; }
+    td {
+      padding: 9px;
+      text-align: center;
+      border-bottom: 1px solid #235023;
+    }
 
-    tr:nth-child(even) { background: rgba(36, 80, 36, .14); }
-    tr:hover { background: rgba(36, 210, 36, .12); }
+    td:first-child, th:first-child {
+      text-align: left;
+    }
+
+    tr:nth-child(even) {
+      background: rgba(33, 232, 33, 0.08);
+    }
+
+    tr:hover {
+      background: rgba(33, 232, 33, 0.15);
+    }
 
     .pos {
-      width: 38px;
-      font-weight: 900;
-      color: var(--green);
+      color: #21e821;
+      font-weight: bold;
+      width: 40px;
     }
 
     .player {
-      font-weight: 800;
-      color: var(--text);
+      font-weight: bold;
     }
-
-    .champion td { background: rgba(36, 210, 36, .16); }
-    .danger td { background: rgba(255, 91, 91, .12); }
-    .warning td { background: rgba(255, 215, 91, .10); }
 
     .loading, .error {
-      padding: 22px;
-      color: var(--muted);
+      padding: 25px;
       text-align: center;
+      color: #b8ddb8;
     }
 
-    .error { color: var(--danger); }
+    .error {
+      color: #ff6b6b;
+    }
 
     footer {
-      color: var(--muted);
       text-align: center;
-      padding: 20px 12px 32px;
+      color: #b8ddb8;
+      padding: 30px;
       font-size: 12px;
     }
 
-    .note {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.45;
-    }
-
-    @media (max-width: 760px) {
-      .brand { font-size: 22px; }
-      .scoreboard { grid-template-columns: 1fr; }
-      th { top: 120px; }
+    @media (max-width: 750px) {
+      h1 { font-size: 22px; }
+      .cards { grid-template-columns: 1fr; }
     }
   </style>
 </head>
+
 <body>
   <header>
-    <div class="brand">Equipo sin nombre</div>
+    <h1>Equipo sin nombre</h1>
     <div class="subtitle">Estadísticas oficiales del fulbito · estilo tablita clásica</div>
     <nav>
-      <button class="active" data-target="apertura">Apertura 2026</button>
-      <button data-target="descensos">Descensos</button>
+      <button class="active" onclick="showSection('apertura')">Apertura 2026</button>
+      <button onclick="showSection('descensos')">Descensos</button>
     </nav>
   </header>
 
   <main>
-    <div class="scoreboard">
-      <div class="stat-card">
-        <div class="label">Líder Apertura</div>
-        <div class="value" id="liderApertura">-</div>
+    <div class="cards">
+      <div class="card">
+        <small>Líder Apertura</small>
+        <div id="liderApertura">-</div>
       </div>
-      <div class="stat-card">
-        <div class="label">Mejor promedio</div>
-        <div class="value" id="mejorPromedio">-</div>
+      <div class="card">
+        <small>Mejor Promedio</small>
+        <div id="mejorPromedio">-</div>
       </div>
-      <div class="stat-card">
-        <div class="label">Última actualización</div>
-        <div class="value" id="ultimaActualizacion">-</div>
+      <div class="card">
+        <small>Última actualización</small>
+        <div id="ultimaActualizacion">-</div>
       </div>
     </div>
 
     <section id="apertura" class="active">
-      <div class="section-title">
-        <span>Tabla Apertura 2026</span>
-        <small>Datos desde Google Sheets</small>
-      </div>
+      <div class="title">Tabla Apertura 2026</div>
       <div id="aperturaContent" class="loading">Cargando tabla...</div>
     </section>
 
     <section id="descensos">
-      <div class="section-title">
-        <span>Promedios / Descensos</span>
-        <small>Datos desde Google Sheets</small>
-      </div>
+      <div class="title">Promedios / Descensos</div>
       <div id="descensosContent" class="loading">Cargando promedios...</div>
     </section>
-
-    <div class="note">
-      Para actualizar la web, modificá el Google Sheets. Si no carga, revisá que el archivo esté compartido como “cualquiera con el vínculo puede ver”.
-    </div>
   </main>
 
   <footer>
@@ -269,31 +219,120 @@
   </footer>
 
   <script>
-    const SHEET_ID = '192LJYUIj-fhgDpciGXRbT7sygegMMhtFKyenQ06etls';
+    const SHEET_ID = "192LJYUIj-fhgDpciGXRbT7sygegMMhtFKyenQ06etls";
+
     const SHEETS = {
-      apertura: 'Apertura 2026',
-      descensos: 'DESCENSOS'
+      apertura: "Apertura 2026",
+      descensos: "DESCENSOS"
     };
 
-    function sheetUrl(sheetName) {
+    function showSection(id) {
+      document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
+      document.querySelectorAll("button").forEach(b => b.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+      event.target.classList.add("active");
+    }
+
+    function googleSheetUrl(sheetName) {
       return `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
     }
 
     async function fetchSheet(sheetName) {
-      const res = await fetch(sheetUrl(sheetName));
-      const text = await res.text();
-      const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
-      const cols = json.table.cols.map((c, i) => c.label || `Col ${i + 1}`);
-      const rows = json.table.rows.map(r => {
+      const response = await fetch(googleSheetUrl(sheetName));
+      const text = await response.text();
+
+      const start = text.indexOf("{");
+      const end = text.lastIndexOf("}") + 1;
+      const json = JSON.parse(text.substring(start, end));
+
+      const cols = json.table.cols.map((col, index) => col.label || `Col ${index + 1}`);
+
+      const rows = json.table.rows.map(row => {
         const obj = {};
-        r.c.forEach((cell, i) => {
-          obj[cols[i]] = cell ? (cell.f || cell.v || '') : '';
+        row.c.forEach((cell, index) => {
+          obj[cols[index]] = cell ? (cell.f || cell.v || "") : "";
         });
         return obj;
-      }).filter(row => Object.values(row).some(v => String(v).trim() !== ''));
+      }).filter(row => {
+        return Object.values(row).some(value => String(value).trim() !== "");
+      });
+
       return { cols, rows };
     }
 
-    function normalizeNumber(value) {
-      if (value === null || value === undefined) return 0;
-      const clean = String(value).replace(',', '.').replace(/[^
+    function renderTable(containerId, data, type) {
+      const container = document.getElementById(containerId);
+
+      if (!data.rows.length) {
+        container.innerHTML = `<div class="error">No se encontraron datos.</div>`;
+        return;
+      }
+
+      let html = `<div class="table-wrap"><table><thead><tr>`;
+      html += `<th>#</th>`;
+
+      data.cols.forEach(col => {
+        html += `<th>${col}</th>`;
+      });
+
+      html += `</tr></thead><tbody>`;
+
+      data.rows.forEach((row, index) => {
+        html += `<tr>`;
+        html += `<td class="pos">${index + 1}</td>`;
+
+        data.cols.forEach((col, colIndex) => {
+          const value = row[col] ?? "";
+          const className = colIndex === 0 ? "player" : "";
+          html += `<td class="${className}">${value}</td>`;
+        });
+
+        html += `</tr>`;
+      });
+
+      html += `</tbody></table></div>`;
+      container.innerHTML = html;
+    }
+
+    function updateCards(apertura, descensos) {
+      if (apertura.rows.length) {
+        const first = apertura.rows[0];
+        const playerCol = apertura.cols[0];
+        document.getElementById("liderApertura").textContent = first[playerCol] || "-";
+      }
+
+      if (descensos.rows.length) {
+        const first = descensos.rows[0];
+        const playerCol = descensos.cols[0];
+        document.getElementById("mejorPromedio").textContent = first[playerCol] || "-";
+      }
+
+      const today = new Date();
+      document.getElementById("ultimaActualizacion").textContent =
+        today.toLocaleDateString("es-AR");
+    }
+
+    async function init() {
+      try {
+        const apertura = await fetchSheet(SHEETS.apertura);
+        const descensos = await fetchSheet(SHEETS.descensos);
+
+        renderTable("aperturaContent", apertura, "apertura");
+        renderTable("descensosContent", descensos, "descensos");
+        updateCards(apertura, descensos);
+
+      } catch (error) {
+        console.error(error);
+
+        document.getElementById("aperturaContent").innerHTML =
+          `<div class="error">No se pudo cargar Apertura 2026. Revisá que el Google Sheets esté público.</div>`;
+
+        document.getElementById("descensosContent").innerHTML =
+          `<div class="error">No se pudo cargar DESCENSOS. Revisá que el Google Sheets esté público.</div>`;
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
