@@ -378,14 +378,21 @@
 
       html += `</tr></thead><tbody>`;
 
-      data.rows.forEach((row, index) => {
+const playerCol = visibleCols[0];
+
+const cleanRows = data.rows.filter(row => {
+  const player = row[playerCol];
+  return player && isNaN(Number(player));
+});
+
+cleanRows.forEach((row, index) => {
         let rowClass = "";
 
         if (type === "apertura" && index === 0) {
           rowClass = "champion";
         }
 
-        if (type === "descensos" && index >= data.rows.length - 3) {
+        if (type === "descensos" && index >= cleanRows.length - 3) {
           rowClass = "danger";
         }
 
