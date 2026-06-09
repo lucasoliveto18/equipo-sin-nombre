@@ -340,8 +340,8 @@ container.innerHTML = html;
 
     async function init() {
       try {
-        const apertura = await fetchSheet(SHEETS.apertura);
-        const descensos = await fetchSheet(SHEETS.descensos);
+        const apertura = await fetchSheet(SHEETS.apertura);console.log(apertura.cols);
+        const descensos = await fetchSheet(SHEETS.descensos);console.log(descensos.cols);
 
         renderTable("aperturaContent", apertura, "apertura");
         renderTable("descensosContent", descensos, "descensos");
