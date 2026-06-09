@@ -305,34 +305,62 @@
     }
 
     function renderTable(containerId, data, type) {
-      const container = document.getElementById(containerId);
+  const container = document.getElementById(containerId);
 
-      if (!data.rows.length) {
-        container.innerHTML = `<div class="error">No se encontraron datos.</div>`;
-        return;
-      }
+  if (!data.rows.length) {
+    container.innerHTML = '<div class="error">No se encontraron datos.</div>';
+    return;
+  }
 
-      let visibleCols = [];
+  let visibleCols = [];
 
-      if (type === "apertura") {
-        visibleCols = [
-          getColumnName(data.cols, ["Player", "PLAYER", "Jugador", "JUGADOR"]),
-          getColumnName(data.cols, ["PTS"]),
-          getColumnName(data.cols, ["PJ"]),
-          getColumnName(data.cols, ["PG"]),
-          getColumnName(data.cols, ["PE"]),
-          getColumnName(data.cols, ["PP"])
-        ];
-      }
+  if (type === "apertura") {
+    visibleCols = ["PLAYER", "PTS", "PJ", "PG", "PE", "PP"];
+  }
 
-      if (type === "descensos") {
-        visibleCols = [
-          getColumnName(data.cols, ["Player", "PLAYER", "Jugador", "JUGADOR"]),
-          getColumnName(data.cols, ["PTS Totales", "PTS TOTALES"]),
-          getColumnName(data.cols, ["PJ TOTAL", "PJ Totales"]),
-          getColumnName(data.cols, ["PROMEDIO", "Promedio"])
-        ];
-      }
+  if (type === "descensos") {
+    visibleCols = ["PLAYER", "PTS Totales", "PJ TOTAL", "PROMEDIO"];
+  }
+
+  visibleCols = visibleCols.filter(function(col) {
+    return data.cols.includes(col);
+  });
+
+  let html = '<div class="table-wrap"><table><thead><tr>';
+  html += '<th>#</th>';
+
+  visibleCols.forEach(function(col) {
+    html += '<th>' + col + '</th>';
+  });
+
+  html += '</tr></thead><tbody>';
+
+  data.rows.forEach(function(row, index) {
+    let rowClass = "";
+
+    if (type === "apertura" && index === 0) {
+      rowClass = "champion";
+    }
+
+    if (type === "descensos" && index >= data.rows.length - 3) {
+      rowClass = "danger";
+    }
+
+    html += '<tr class="' + rowClass + '">';
+    html += '<td class="pos">' + (index + 1) + '</td>';
+
+    visibleCols.forEach(function(col, colIndex) {
+      const value = row[col] || "";
+      const className = colIndex === 0 ? "player" : "";
+      html += '<td class="' + className + '">' + value + '</td>';
+    });
+
+    html += '</tr>';
+  });
+
+  html += '</tbody></table></div>';
+  container.innerHTML = html;
+}
 
       visibleCols = visibleCols.filter(Boolean);
 
