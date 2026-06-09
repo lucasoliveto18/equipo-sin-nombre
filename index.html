@@ -307,11 +307,6 @@
     function renderTable(containerId, data, type) {
   const container = document.getElementById(containerId);
 
-  if (!data.rows.length) {
-    container.innerHTML = '<div class="error">No se encontraron datos.</div>';
-    return;
-  }
-
   let visibleCols = [];
 
   if (type === "apertura") {
@@ -326,6 +321,13 @@
     return data.cols.includes(col);
   });
 
+  const playerCol = visibleCols[0];
+
+  const cleanRows = data.rows.filter(function(row) {
+    const player = row[playerCol];
+    return player && isNaN(Number(player));
+  });
+
   let html = '<div class="table-wrap"><table><thead><tr>';
   html += '<th>#</th>';
 
@@ -335,14 +337,14 @@
 
   html += '</tr></thead><tbody>';
 
-  data.rows.forEach(function(row, index) {
+  cleanRows.forEach(function(row, index) {
     let rowClass = "";
 
     if (type === "apertura" && index === 0) {
       rowClass = "champion";
     }
 
-    if (type === "descensos" && index >= data.rows.length - 3) {
+    if (type === "descensos" && index >= cleanRows.length - 3) {
       rowClass = "danger";
     }
 
@@ -361,56 +363,6 @@
   html += '</tbody></table></div>';
   container.innerHTML = html;
 }
-
-      visibleCols = visibleCols.filter(Boolean);
-
-      if (!visibleCols.length) {
-        container.innerHTML = `<div class="error">No se pudieron detectar columnas válidas.</div>`;
-        return;
-      }
-
-      let html = `<div class="table-wrap"><table><thead><tr>`;
-      html += `<th>#</th>`;
-
-      visibleCols.forEach(col => {
-        html += `<th>${col}</th>`;
-      });
-
-      html += `</tr></thead><tbody>`;
-
-const playerCol = visibleCols[0];
-
-const cleanRows = data.rows.filter(row => {
-  const player = row[playerCol];
-  return player && isNaN(Number(player));
-});
-
-cleanRows.forEach((row, index) => {
-        let rowClass = "";
-
-        if (type === "apertura" && index === 0) {
-          rowClass = "champion";
-        }
-
-        if (type === "descensos" && index >= cleanRows.length - 3) {
-          rowClass = "danger";
-        }
-
-        html += `<tr class="${rowClass}">`;
-        html += `<td class="pos">${index + 1}</td>`;
-
-        visibleCols.forEach((col, colIndex) => {
-          const value = row[col] ?? "";
-          const className = colIndex === 0 ? "player" : "";
-          html += `<td class="${className}">${value}</td>`;
-        });
-
-        html += `</tr>`;
-      });
-
-      html += `</tbody></table></div>`;
-      container.innerHTML = html;
-    }
 
     function updateCards(apertura, descensos) {
       if (apertura.rows.length) {
