@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Equipo sin nombre</title>
+  <style>
+    :root {
+      --bg: #071107;
+      --panel: #102010;
+      --panel-2: #0b190b;
+      --green: #24d224;
+      --green-dark: #149414;
+      --text: #e6ffe6;
+      --muted: #a7c7a7;
+      --line: #245024;
+      --danger: #ff5b5b;
+      --warning: #ffd75b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: radial-gradient(circle at top, #102810 0, var(--bg) 48%);
+      color: var(--text);
+    }
+
+    header {
+      border-bottom: 3px solid var(--green);
+      background: linear-gradient(180deg, #0f240f, #071107);
+      padding: 18px 14px 14px;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .brand {
+      display: inline-block;
+      border: 2px solid var(--green);
+      padding: 8px 14px;
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      color: var(--green);
+      text-transform: uppercase;
+      text-shadow: 0 0 8px rgba(36, 210, 36, .5);
+      background: #061006;
+    }
+
+    .subtitle {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .8px;
+    }
+
+    nav {
+      margin-top: 14px;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    nav button {
+      cursor: pointer;
+      border: 1px solid var(--green-dark);
+      background: #081608;
+      color: var(--text);
+      padding: 9px 12px;
+      font-weight: 700;
+      border-radius: 3px;
+    }
+
+    nav button.active,
+    nav button:hover {
+      background: var(--green-dark);
+      color: #031003;
+    }
+
+    main {
+      max-width: 1080px;
+      margin: 22px auto 40px;
+      padding: 0 12px;
+    }
+
+    .scoreboard {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .stat-card {
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      padding: 14px;
+      min-height: 86px;
+    }
+
+    .stat-card .label {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    .stat-card .value {
+      font-size: 24px;
+      color: var(--green);
+      font-weight: 900;
+    }
+
+    section {
+      display: none;
+      border: 1px solid var(--line);
+      background: rgba(7, 17, 7, .9);
+      box-shadow: 0 0 18px rgba(0,0,0,.25);
+    }
+
+    section.active { display: block; }
+
+    .section-title {
+      background: var(--green-dark);
+      color: #031003;
+      padding: 10px 12px;
+      font-size: 18px;
+      font-weight: 900;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .section-title small {
+      font-size: 11px;
+      font-weight: 700;
+      opacity: .8;
+    }
+
+    .table-wrap { overflow-x: auto; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 640px;
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 9px 8px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    th {
+      background: #0c240c;
+      color: var(--green);
+      font-size: 12px;
+      text-transform: uppercase;
+      position: sticky;
+      top: 96px;
+      z-index: 2;
+    }
+
+    td:first-child, th:first-child { text-align: left; }
+
+    tr:nth-child(even) { background: rgba(36, 80, 36, .14); }
+    tr:hover { background: rgba(36, 210, 36, .12); }
+
+    .pos {
+      width: 38px;
+      font-weight: 900;
+      color: var(--green);
+    }
+
+    .player {
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .champion td { background: rgba(36, 210, 36, .16); }
+    .danger td { background: rgba(255, 91, 91, .12); }
+    .warning td { background: rgba(255, 215, 91, .10); }
+
+    .loading, .error {
+      padding: 22px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .error { color: var(--danger); }
+
+    footer {
+      color: var(--muted);
+      text-align: center;
+      padding: 20px 12px 32px;
+      font-size: 12px;
+    }
+
+    .note {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 760px) {
+      .brand { font-size: 22px; }
+      .scoreboard { grid-template-columns: 1fr; }
+      th { top: 120px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">Equipo sin nombre</div>
+    <div class="subtitle">Estadísticas oficiales del fulbito · estilo tablita clásica</div>
+    <nav>
+      <button class="active" data-target="apertura">Apertura 2026</button>
+      <button data-target="descensos">Descensos</button>
+    </nav>
+  </header>
+
+  <main>
+    <div class="scoreboard">
+      <div class="stat-card">
+        <div class="label">Líder Apertura</div>
+        <div class="value" id="liderApertura">-</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Mejor promedio</div>
+        <div class="value" id="mejorPromedio">-</div>
+      </div>
+      <div class="stat-card">
+        <div class="label">Última actualización</div>
+        <div class="value" id="ultimaActualizacion">-</div>
+      </div>
+    </div>
+
+    <section id="apertura" class="active">
+      <div class="section-title">
+        <span>Tabla Apertura 2026</span>
+        <small>Datos desde Google Sheets</small>
+      </div>
+      <div id="aperturaContent" class="loading">Cargando tabla...</div>
+    </section>
+
+    <section id="descensos">
+      <div class="section-title">
+        <span>Promedios / Descensos</span>
+        <small>Datos desde Google Sheets</small>
+      </div>
+      <div id="descensosContent" class="loading">Cargando promedios...</div>
+    </section>
+
+    <div class="note">
+      Para actualizar la web, modificá el Google Sheets. Si no carga, revisá que el archivo esté compartido como “cualquiera con el vínculo puede ver”.
+    </div>
+  </main>
+
+  <footer>
+    Hecho para la gloria barrial · Equipo sin nombre FC
+  </footer>
+
+  <script>
+    const SHEET_ID = '192LJYUIj-fhgDpciGXRbT7sygegMMhtFKyenQ06etls';
+    const SHEETS = {
+      apertura: 'Apertura 2026',
+      descensos: 'DESCENSOS'
+    };
+
+    function sheetUrl(sheetName) {
+      return `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
+    }
+
+    async function fetchSheet(sheetName) {
+      const res = await fetch(sheetUrl(sheetName));
+      const text = await res.text();
+      const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
+      const cols = json.table.cols.map((c, i) => c.label || `Col ${i + 1}`);
+      const rows = json.table.rows.map(r => {
+        const obj = {};
+        r.c.forEach((cell, i) => {
+          obj[cols[i]] = cell ? (cell.f || cell.v || '') : '';
+        });
+        return obj;
+      }).filter(row => Object.values(row).some(v => String(v).trim() !== ''));
+      return { cols, rows };
+    }
+
+    function normalizeNumber(value) {
+      if (value === null || value === undefined) return 0;
+      const clean = String(value).replace(',', '.').replace(/[^
