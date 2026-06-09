@@ -142,7 +142,7 @@ function renderTable(containerId, data, type){
 
   if (type === "apertura"){
     visibleCols = [
-      findCol(data.cols, ["PLAYER", "Player", "Jugador", "JUGADOR"]),
+      findCol(data.cols[0],
       findCol(data.cols, ["PTS"]),
       findCol(data.cols, ["PJ"]),
       findCol(data.cols, ["PG"]),
@@ -153,7 +153,7 @@ function renderTable(containerId, data, type){
 
   if (type === "descensos"){
     visibleCols = [
-      findCol(data.cols, ["PLAYER", "Player", "Jugador", "JUGADOR"]),
+      findCol(data.cols[0],
       findCol(data.cols, ["PTS Totales", "PTS TOTALES"]),
       findCol(data.cols, ["PJ TOTAL", "PJ Totales"]),
       findCol(data.cols, ["PROMEDIO", "Promedio"])
