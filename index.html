@@ -226,12 +226,20 @@
       descensos: "DESCENSOS"
     };
 
-    function showSection(id) {
-      document.querySelectorAll("section").forEach(s => s.classList.remove("active"));
-      document.querySelectorAll("button").forEach(b => b.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
-      event.target.classList.add("active");
-    }
+function showSection(id) {
+  document.querySelectorAll("section").forEach(section => {
+    section.classList.remove("active");
+  });
+
+  document.querySelectorAll("nav button").forEach(button => {
+    button.classList.remove("active");
+  });
+
+  document.getElementById(id).classList.add("active");
+
+  const button = document.querySelector(`button[onclick="showSection('${id}')"]`);
+  if (button) button.classList.add("active");
+}
 
     function googleSheetUrl(sheetName) {
       return `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
