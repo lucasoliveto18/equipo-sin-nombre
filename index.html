@@ -189,7 +189,23 @@ function renderTable(containerId, data, type){
   }
 
   const playerCol = visibleCols[0];
-  const cleanRows = cleanPlayerRows(data.rows, playerCol);
+  let cleanRows = cleanPlayerRows(data.rows, playerCol);
+
+if (type === "apertura") {
+  const ptsCol = findCol(data.cols, ["PTS"]);
+
+  cleanRows.sort(function(a, b) {
+    return Number(b[ptsCol]) - Number(a[ptsCol]);
+  });
+}
+
+if (type === "descensos") {
+  const promedioCol = findCol(data.cols, ["PROMEDIO", "Promedio"]);
+
+  cleanRows.sort(function(a, b) {
+    return Number(b[promedioCol]) - Number(a[promedioCol]);
+  });
+}
 
   if (!cleanRows.length){
     container.innerHTML = '<div class="error">No se encontraron jugadores.</div>';
