@@ -292,7 +292,8 @@ function updateCards(apertura, descensos){
 async function init(){
   try{
     const apertura = await fetchSheet("Apertura 2026");
-    const descensos = await fetchSheet("DESCENSOS");
+const clausura = await fetchSheet("Clausura 2026");
+const descensos = await fetchSheet("DESCENSOS");
 
     console.log("COLUMNAS APERTURA:");
     console.log(apertura.cols);
