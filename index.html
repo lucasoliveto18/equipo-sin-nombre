@@ -308,7 +308,9 @@ updateCards(apertura, descensos);
   }catch(error){
     console.error(error);
     document.getElementById("aperturaContent").innerHTML = '<div class="error">No se pudo cargar Apertura 2026.</div>';
-    document.getElementById("descensosContent").innerHTML = '<div class="error">No se pudo cargar DESCENSOS.</div>';
+document.getElementById("clausuraContent").innerHTML = '<div class="error">No se pudo cargar Clausura 2026.</div>';
+document.getElementById("anualContent").innerHTML = '<div class="error">No se pudo cargar Tabla Anual.</div>';
+document.getElementById("descensosContent").innerHTML = '<div class="error">No se pudo cargar DESCENSOS.</div>';
   }
 }
 
