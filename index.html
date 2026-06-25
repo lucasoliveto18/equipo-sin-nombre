@@ -302,6 +302,7 @@ const descensos = await fetchSheet("DESCENSOS");
     console.log(apertura.rows[0]);
 
     renderTable("aperturaContent", apertura, "apertura");
+    renderTable("clausuraContent", clausura, "apertura");
     renderTable("descensosContent", descensos, "descensos");
 updateCards(apertura, descensos);
   }catch(error){
