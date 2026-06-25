@@ -111,8 +111,13 @@ document.getElementById("btnDescensos").addEventListener("click", function(){
 
 function showSection(sectionId, buttonId){
   document.getElementById("apertura").classList.remove("active");
+  document.getElementById("clausura").classList.remove("active");
+  document.getElementById("anual").classList.remove("active");
   document.getElementById("descensos").classList.remove("active");
+
   document.getElementById("btnApertura").classList.remove("active");
+  document.getElementById("btnClausura").classList.remove("active");
+  document.getElementById("btnAnual").classList.remove("active");
   document.getElementById("btnDescensos").classList.remove("active");
 
   document.getElementById(sectionId).classList.add("active");
